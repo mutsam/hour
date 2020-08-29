@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <title> hour </title>
+        <style>
+        *{
+           box-sizing: border-box; 
+        }
+     body{
+       margin: 0;
+       padding: 0;
+       background: #263238;
+     }
+    #title{ 
+       background: #37474f;
+       color: #fff;
+       text-align: center;
+       padding: 10px ;
+       font-family: 'Arial Black';
+    } 
+    .all{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% ,-50%); 
+    }
+    #box{
+        border: 30px solid rgb(172, 171, 171);
+        background-color: #000;
+        color: white;
+        text-align: center; 
+        font-family: 'Impact';
+        width: 500px;
+        border-radius: 10px;
+    }
+    #time{
+        font-size: 8em;
+    }
+    #date{
+        font-size: 3em;  
+        padding-top: 7px; 
+        padding: 10px 0 8px 0;
+        background: white; 
+        color: rgb( 1, 6 ,46);
+        border-radius: 50% 50% 0 0;
+    }
+    #box_color{
+        text-align: center;
+        padding-top: 10px;
+        font-size: x-large;
+        color: #fff;
+        font-family: 'Candara Light';
+    }
+    #box_color label{
+        font-size: 1.2em;;
+    }
+    #box_color input{
+        width: 60px;
+        height: 30px;
+        border: none;
+        outline: none;
+    }
+    #footer{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        font-family: '@MingLiU_HKSCS-ExtB'; 
+    } 
+    </style>         
+    </head>
+    <body>
+
+  <h1 id='title'> Hours  </h1>
+    <div class="all">
+        <div  id="box"> 
+              <div id="time"> 1:18:32 </div> 
+              <div id="date">8-20-2020</div> 
+        </div>
+        <div id="box_color"> 
+            <label>Text </label><input type="color" id="text"/>
+            <label>Back</label><input type="color" id="back" />
+            <label>Border</label><input type="color" id="border" />
+        </div>
+    </div>
+    <div id="footer">
+       <h1> Developer By: Moatasem Muhammad Shafa</h1>
+    </div>
+       <script> 
+       // var
+        var box_color = document.getElementById('box_color'); 
+        var title = document.getElementById('title'); 
+        var text = document.getElementById('text');
+        var back = document.getElementById('back');
+        var border = document.getElementById('border');
+        var box = document.getElementById('box'); 
+        var time = document.getElementById('time');
+        var day = document.getElementById('date');
+        var footer = document.getElementById('footer');
+        //
+        var bool = 0 ;
+        var booll = 0;
+        title.onclick = ()=>{ 
+            if(booll == 0){
+              booll = 1; 
+              footer.style.display = 'none';
+            }else if(booll == 1){
+              booll = 0;
+              footer.style.display = 'block'; 
+            }
+        };
+        box.onclick = ()=>{
+            if(bool == 0){
+              bool = 1; 
+              box_color.style.display = 'none';
+            }else if(bool == 1){
+              bool = 0;
+              box_color.style.display = 'block'; 
+            }
+        };
+        // method
+       function updateTime(){
+           var date = new Date();
+           var hours   = date.getHours();
+           var minutes = date.getMinutes();
+           var second  = date.getSeconds();  
+
+           time.innerHTML = hours  + ':' + minutes + ':' + second; 
+       }
+       function updateDay(){
+           var date = new Date(); 
+           var days   = date.getDate();
+           var month = parseInt(date.getMonth()+1);
+           var yesr  = date.getFullYear();  
+
+           day.innerHTML  = days  + '-' + month + '-' + yesr;
+       }
+       function getlocalStorage(){
+            text.value = localStorage.getItem('color');
+            back.value  = localStorage.getItem('back');
+            border.value = localStorage.getItem('border'); 
+            time.style.color = localStorage.getItem('color'); 
+            box.style.borderColor  =  localStorage.getItem('border');
+            box.style.backgroundColor = localStorage.getItem('back');
+            title.style.backgroundColor = localStorage.getItem('border');
+            title.style.color = localStorage.getItem('back');
+            footer.style.color = localStorage.getItem('color');
+            document.body.style.backgroundColor = localStorage.getItem('back');
+       }
+       // onchange
+          text.onchange = ()=>{
+            time.style.color = text.value; 
+            footer.style.color = text.value; 
+               localStorage.setItem('color' , text.value);
+           } ;
+           border.onchange = ()=>{
+            box.style.borderColor = border.value;
+            title.style.backgroundColor = border.value;
+                localStorage.setItem('border' , border.value);
+           };
+           back.onchange = ()=>{
+            box.style.backgroundColor = back.value;
+            document.body.style.backgroundColor = back.value;
+            title.style.color = back.value;
+                localStorage.setItem('back' , back.value);
+           };
+           
+           // interval
+       setInterval(() => {
+        updateTime();
+       }, 1*1000);
+       setInterval(() => {
+        updateDay();
+       }, 59*1000);
+       
+       // onload page start
+       onload = updateTime();
+       onload = updateDay();
+       onload = getlocalStorage();  
+       </script>
+    </body>
+</html>
